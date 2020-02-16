@@ -6,7 +6,7 @@ import googlemaps
 def get_data(place=None, pagetoken=None):
     '''This function will gather remote data and return a JSON dictionary
     Parameters:
-        place (dictionary) -- Specific hotel information
+        place (dictionary) -- Specific article information
         pagetoken (string) -- Page Token ID to retrieve the next set of data.
     Returns:
         dictionary: Retrieved JSON data
@@ -36,15 +36,7 @@ def get_data(place=None, pagetoken=None):
     if api_key is None:
         return {'error': "API key not set."}
 
-    '''
-    Coordinates to Blue Bay Cottage where I stayed the last time
-    I visited the island.
-    '''
-    latitude = 17.740033
-    longitude = -88.028298
-
-    gmaps = googlemaps.Client(key=api_key)
-
+   
     if place is not None and 'place_id' in place:
         # print(f"DEBUG: place_id = {place['place_id']}")
         data = gmaps.place(place['place_id'])
@@ -61,20 +53,17 @@ def get_data(place=None, pagetoken=None):
 
         while data is None and count < 3:
             try:
-                data = gmaps.places_nearby(
-                    [latitude, longitude],  # location: long, lat
-                    2500,  # radius
+                data = news.api(
                     None,  # keyword
-                    None,  # language
-                    None,  # min price
-                    None,  # max price
+                    None,  # articles
+                    None,  # source
                     None,  # name
                     None,  # open now
-                    None,  # rank_by (prominence, distance)
-                    'lodging',  # type
+                    None,  # rank_by (popularity)
+                    'word',  # type
                     pagetoken  # the page token, if it exists.
                 )
-            except googlemaps.exceptions.ApiError:
+            except newsapi.exceptions.ApiError:
                 # print(f"DEBUG: Caught error. Trying again. {count+1}")
                 data = None
                 count += 1
