@@ -1,6 +1,6 @@
-import os
+aimport os
 import time
-import googlemaps
+import newsapi
 
 
 def get_data(place=None, pagetoken=None):
