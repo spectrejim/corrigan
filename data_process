@@ -20,7 +20,7 @@ def reviews(details):
 def ratings(place):
     """Gather and process place ratings
     Arguments:
-        place {dictionary} - Hotel data.
+        place {dictionary} - Keyword data.
     """
     # init a few variables we'll need
     user_ratings_total = 0
@@ -38,22 +38,18 @@ def ratings(place):
     return [rating, user_ratings_total]
 
 
-def single_place(place):
+def single_article(article):
     '''
-    A single hotel is processed by this function.
+    A single article is processed by this function.
     Arguments:
-        place {dictionary} -- Hotel data.
+        place {dictionary} -- article data.
     '''
-    rating, user_ratings_total = ratings(place)
-    details = gather.get_data(place)
-    user_reviews = reviews(details)
+    ranking, word_rankings_total = ratings(word)
+    details = gather.get_data(article)
 
-    output.ratings(place['place_id'], rating, user_ratings_total)
-    output.reviews(place['place_id'], user_reviews)
-    output.hotels(place['place_id'], place)
+    output.ratings(place['place_id'], keyword, word_rankings_total)
 
     # Testing purposes only? May remove later
-    print(f"{place['name']} rating: {rating}({user_ratings_total})")
 
 
 def process(data):
